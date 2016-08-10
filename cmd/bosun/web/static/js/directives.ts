@@ -1,4 +1,4 @@
-bosunApp.directive('tsResults', function() {
+bosunApp.directive('tsResults', function () {
     return {
         templateUrl: '/partials/results.html',
         link: (scope: any, elem, attrs) => {
@@ -64,9 +64,9 @@ interface ITimeScope extends IBosunScope {
     noLink: string;
 }
 
-bosunApp.directive("tsTime", function() {
+bosunApp.directive("tsTime", function () {
     return {
-        link: function(scope: ITimeScope, elem: any, attrs: any) {
+        link: function (scope: ITimeScope, elem: any, attrs: any) {
             scope.$watch(attrs.tsTime, (v: any) => {
                 var m = moment(v).utc();
                 var text = fmtTime(v);
@@ -93,9 +93,9 @@ bosunApp.directive("tsTime", function() {
     };
 });
 
-bosunApp.directive("tsTimeUnix", function() {
+bosunApp.directive("tsTimeUnix", function () {
     return {
-        link: function(scope: ITimeScope, elem: any, attrs: any) {
+        link: function (scope: ITimeScope, elem: any, attrs: any) {
             scope.$watch(attrs.tsTimeUnix, (v: any) => {
                 var m = moment(v * 1000).utc();
                 var text = fmtTime(m);
@@ -122,9 +122,9 @@ bosunApp.directive("tsTimeUnix", function() {
     };
 });
 
-bosunApp.directive("tsSince", function() {
+bosunApp.directive("tsSince", function () {
     return {
-        link: function(scope: IBosunScope, elem: any, attrs: any) {
+        link: function (scope: IBosunScope, elem: any, attrs: any) {
             scope.$watch(attrs.tsSince, (v: any) => {
                 var m = moment(v).utc();
                 elem.text(m.fromNow());
@@ -133,9 +133,9 @@ bosunApp.directive("tsSince", function() {
     };
 });
 
-bosunApp.directive("tooltip", function() {
+bosunApp.directive("tooltip", function () {
     return {
-        link: function(scope: IGraphScope, elem: any, attrs: any) {
+        link: function (scope: IGraphScope, elem: any, attrs: any) {
             angular.element(elem[0]).tooltip({ placement: "bottom" });
         },
     };
@@ -196,7 +196,7 @@ bosunApp.directive('tsresizable', () => {
         },
         link: function postLink(scope: any, elem: any, attrs) {
             elem.resizable();
-            elem.on('resizestop', function(evt, ui) {
+            elem.on('resizestop', function (evt, ui) {
                 if (scope.callback) { scope.callback(); }
             });
         }
@@ -288,7 +288,7 @@ bosunApp.directive('tsTimeLine', () => {
                     .transition()
                     .call(xAxis);
                 var chart = svg.append('g');
-                angular.forEach(entries, function(entry: any, i: number) {
+                angular.forEach(entries, function (entry: any, i: number) {
                     chart.selectAll('.bars')
                         .data(entry.value.History)
                         .enter()
@@ -301,10 +301,10 @@ bosunApp.directive('tsTimeLine', () => {
                             return xScale(parseDate(d.EndTime)) - xScale(parseDate(d.Time));
                         })
                         .on('mousemove.x', mousemove_x)
-                        .on('mousemove.y', function(d) {
+                        .on('mousemove.y', function (d) {
                             alert_legend.text(entry.key);
                         })
-                        .on('click', function(d, j) {
+                        .on('click', function (d, j) {
                             var id = 'panel' + i + '-' + j;
                             scope.shown['group' + i] = true;
                             scope.shown[id] = true;
@@ -331,13 +331,13 @@ bosunApp.directive('tsTimeLine', () => {
                     .attr('x', 0)
                     .attr('dx', '-.5em')
                     .attr('dy', '.25em')
-                    .attr('y', function(d: any, i: number) { return (i + .5) * barheight; })
-                    .text(function(d: any) { return d; });
+                    .attr('y', function (d: any, i: number) { return (i + .5) * barheight; })
+                    .text(function (d: any) { return d; });
                 chart.selectAll('.sep')
                     .data(values)
                     .enter()
                     .append('rect')
-                    .attr('y', function(d: any, i: number) { return (i + 1) * barheight })
+                    .attr('y', function (d: any, i: number) { return (i + 1) * barheight })
                     .attr('height', 1)
                     .attr('x', 0)
                     .attr('width', width)
@@ -379,20 +379,20 @@ function nfmt(s: any, mult: number, suffix: string, opts: any) {
     return neg + (+r) + suffix;
 }
 
-bosunApp.filter('nfmt', function() {
-    return function(s: any) {
+bosunApp.filter('nfmt', function () {
+    return function (s: any) {
         return nfmt(s, 1000, '', {});
     }
 });
 
-bosunApp.filter('bytes', function() {
-    return function(s: any) {
+bosunApp.filter('bytes', function () {
+    return function (s: any) {
         return nfmt(s, 1024, 'B', { round: true });
     }
 });
 
-bosunApp.filter('bits', function() {
-    return function(s: any) {
+bosunApp.filter('bits', function () {
+    return function (s: any) {
         return nfmt(s, 1024, 'b', { round: true });
     }
 });
@@ -400,12 +400,12 @@ bosunApp.filter('bits', function() {
 
 bosunApp.directive('elastic', [
     '$timeout',
-    function($timeout) {
+    function ($timeout) {
         return {
             restrict: 'A',
-            link: function($scope, element) {
+            link: function ($scope, element) {
                 $scope.initialHeight = $scope.initialHeight || element[0].style.height;
-                var resize = function() {
+                var resize = function () {
                     element[0].style.height = $scope.initialHeight;
                     element[0].style.height = "" + element[0].scrollHeight + "px";
                 };
@@ -416,7 +416,7 @@ bosunApp.directive('elastic', [
     }
 ]);
 
-bosunApp.directive('tsBar', ['$window', 'nfmtFilter', function($window: ng.IWindowService, fmtfilter: any) {
+bosunApp.directive('tsBar', ['$window', 'nfmtFilter', function ($window: ng.IWindowService, fmtfilter: any) {
     var margin = {
         top: 20,
         right: 20,
@@ -504,7 +504,7 @@ bosunApp.directive('tsBar', ['$window', 'nfmtFilter', function($window: ng.IWind
                 bars.enter()
                     .append("rect")
                     .attr("class", "bar")
-                    .attr("y", function(d) { return yScale(d.name); })
+                    .attr("y", function (d) { return yScale(d.name); })
                     .attr("height", yScale.rangeBand())
                     .attr('width', (d: any) => { return xScale(d.Value); })
             };
@@ -512,7 +512,7 @@ bosunApp.directive('tsBar', ['$window', 'nfmtFilter', function($window: ng.IWind
     };
 }]);
 
-bosunApp.directive('tsGraph', ['$window', 'nfmtFilter', function($window: ng.IWindowService, fmtfilter: any) {
+bosunApp.directive('tsGraph', ['$window', 'nfmtFilter', function ($window: ng.IWindowService, fmtfilter: any) {
     var margin = {
         top: 10,
         right: 10,
@@ -709,7 +709,7 @@ bosunApp.directive('tsGraph', ['$window', 'nfmtFilter', function($window: ng.IWi
                 var minX: number, minY: number;
 
                 names
-                    .each(function(d: any) {
+                    .each(function (d: any) {
                         var idx = bisect(d.Data, t);
                         if (idx >= d.Data.length) {
                             idx = d.Data.length - 1;
@@ -1047,7 +1047,7 @@ bosunApp.directive('tsGraph', ['$window', 'nfmtFilter', function($window: ng.IWi
 }]);
 
 
-bosunApp.directive('tsHist', ['$window', 'nfmtFilter', function($window: ng.IWindowService, fmtfilter: any) {
+bosunApp.directive('tsHist', ['$window', 'nfmtFilter', function ($window: ng.IWindowService, fmtfilter: any) {
 	var margin = {
 		top: 10,
 		right: 10,
@@ -1090,7 +1090,7 @@ bosunApp.directive('tsHist', ['$window', 'nfmtFilter', function($window: ng.IWin
 				.scale(yScale)
 				.orient("left")
 				.ticks(10);
-			var paths = svg.append('g');
+			var bars = svg.append('g');
 			var legendTop = d3.select(elem[0]).append('div');
 			var legend = d3.select(elem[0]).append('div');
 			legend.style('clear', 'both');
@@ -1100,7 +1100,7 @@ bosunApp.directive('tsHist', ['$window', 'nfmtFilter', function($window: ng.IWin
 				names.enter()
 					.append('div')
 					.attr('class', 'series')
-					.style('color', (d: any) => { return color(JSON.stringify(d.Group))})
+					.style('color', (d: any) => { return color(JSON.stringify(d.Group)) })
 					.text((d: any) => { return JSON.stringify(d.Group); })
 					.on("click", (d: any, i: any) => {
 						var sel = d3.select("#hist" + i.toString());
@@ -1143,18 +1143,18 @@ bosunApp.directive('tsHist', ['$window', 'nfmtFilter', function($window: ng.IWin
 					return;
 				}
 				console.log(scope.data)
-				var line = d3.svg.area()
-					.x(function(d) { return xScale(d.Low); })
-					.y(function(d) { return yScale(d.Count); })
-					.interpolate("step");
-				line.y0(yScale(0));
+				// var line = d3.svg.area()
+				// 	.x(function(d) { return xScale(d.Low); })
+				// 	.y(function(d) { return yScale(d.Count); })
+				// 	.interpolate("step");
+				// line.y0(yScale(0));
 				xScale.domain([
-					Math.min(...scope.data.map((d: any) => { return d3.min(d.Value.Buckets, (b: any) => {return b.Low}) })),
-					Math.max(...scope.data.map((d: any) => { return d3.max(d.Value.Buckets, (b: any) => {return b.Low}) })),
+					Math.min(...scope.data.map((d: any) => { return d3.min(d.Value.Buckets, (b: any) => { return b.Low }) })),
+					Math.max(...scope.data.map((d: any) => { return d3.max(d.Value.Buckets, (b: any) => { return b.Low }) })),
 				]);
 				yScale.domain([
-					Math.min(...scope.data.map((d: any) => { return d3.min(d.Value.Buckets, (b: any) => {return b.Count}) })),
-					Math.max(...scope.data.map((d: any) => { return d3.max(d.Value.Buckets, (b: any) => {return b.Count}) })),
+					Math.min(...scope.data.map((d: any) => { return d3.min(d.Value.Buckets, (b: any) => { return b.Count }) })),
+					Math.max(...scope.data.map((d: any) => { return d3.max(d.Value.Buckets, (b: any) => { return b.Count }) })),
 				]);
 				svg.selectAll('g.axis').remove();
 				//X axis
@@ -1169,19 +1169,29 @@ bosunApp.directive('tsHist', ['$window', 'nfmtFilter', function($window: ng.IWin
 				svg.append("g")
 					.attr("class", "y axis")
 					.call(yAxis)
-				paths.remove()
-				paths = svg.append("g")
+				bars.remove()
+				bars = svg.append("g")
+                // var bar = svg.selectAll(".bar")
+                //     .data(scope.data)
+                //     .enter().append("g")
+                //     .attr("class", "bar")
+
 				scope.data.map((data: any, i: any) => {
-					paths.append("path")
-						.attr("class", "line")
-						.attr("id", (d: any) => { return "hist"+i.toString(); })
-						.attr("d", line(data.Value.Buckets))
-						.attr('stroke', (d) => { return d3.rgb(color(JSON.stringify(data.Group))).darker(1); })
-						.attr('stroke-width', 3)
-						.style("opacity", .6)
-						.style('fill', (d) => { return color(JSON.stringify(data.Group)); })
+					var bargroup = bars.append("g")
+							.attr("id", (d: any) => { return "hist" + i.toString(); })	
+                    data.Value.Buckets.map((bucket: any, j: number) => {
+                        bargroup.append("rect")
+                            .attr("y", yScale(bucket.Count))
+							.attr("x", xScale(data.Value.Interval)*j)
+                            .attr("width", xScale(data.Value.Interval))
+                            .attr("height", height - yScale(bucket.Count))
+							.style('fill', (d) => { return color(JSON.stringify(data.Group)); })
+							.attr('stroke', (d) => { return d3.rgb(color(JSON.stringify(data.Group))).darker(1); })
+							//.attr('stroke-width', 3)
+							.style("opacity", .6)
+					})
 				});
-			drawLegend();
+				drawLegend();
 			};
 		},
 	};
