@@ -49,6 +49,11 @@ type Conf struct {
 	// UseNtlm specifies if HTTP requests should authenticate with NTLM.
 	UseNtlm bool
 
+	// UserAgentMessage is an optional message that will be appended to the
+	// end of the User Agent when making HTTP requests.
+	// Example: Scollector/0.6.0-pre (Custom message here)
+	UserAgentMessage string
+
 	HAProxy        []HAProxy
 	SNMP           []SNMP
 	MIBS           map[string]MIB

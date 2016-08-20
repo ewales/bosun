@@ -47,6 +47,9 @@ var (
 	// Whether or not to use NTLM authentication
 	UseNtlm bool = false
 
+	// DefaultClient can be used to override the HTTP client that will be used to make requests.
+	DefaultClient *http.Client
+
 	// Dropped is the number of dropped data points due to a full queue.
 	dropped int64
 
@@ -109,6 +112,9 @@ func (t *timeoutTransport) RoundTrip(r *http.Request) (*http.Response, error) {
 func InitChan(tsdbhost *url.URL, root string, ch chan *opentsdb.DataPoint) error {
 	if tchan != nil {
 		return fmt.Errorf("cannot init twice")
+	}
+	if DefaultClient != nil {
+		client = DefaultClient
 	}
 	if err := checkClean(root, "metric root"); err != nil {
 		return err
