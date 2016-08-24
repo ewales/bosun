@@ -124,6 +124,8 @@ func (f FuncType) String() string {
 		return "seriesexpr"
 	case TypeHistogramSet:
 		return "histogram"
+	case TypeHistogramSeries:
+		return "histoseries"
 	default:
 		return "unknown"
 	}
