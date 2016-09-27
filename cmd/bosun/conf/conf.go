@@ -334,23 +334,25 @@ type Macro struct {
 type Alert struct {
 	Text string
 	Vars
-	*Template        `json:"-"`
-	Name             string
-	Crit             *expr.Expr `json:",omitempty"`
-	Warn             *expr.Expr `json:",omitempty"`
-	Depends          *expr.Expr `json:",omitempty"`
-	Squelch          Squelches  `json:"-"`
-	CritNotification *Notifications
-	WarnNotification *Notifications
-	Unknown          time.Duration
-	MaxLogFrequency  time.Duration
-	IgnoreUnknown    bool
-	UnknownsNormal   bool
-	CloseOnNormal    bool
-	UnjoinedOK       bool `json:",omitempty"`
-	Log              bool
-	RunEvery         int
-	ReturnType       models.FuncType
+	*Template         `json:"-"`
+	Name              string
+	Crit              *expr.Expr `json:",omitempty"`
+	Warn              *expr.Expr `json:",omitempty"`
+	Depends           *expr.Expr `json:",omitempty"`
+	Squelch           Squelches  `json:"-"`
+	CritNotification  *Notifications
+	WarnNotification  *Notifications
+	CloseNotification *Notifications
+	Unknown           time.Duration
+	MaxLogFrequency   time.Duration
+	IgnoreUnknown     bool
+	UnknownsNormal    bool
+	CloseOnNormal     bool
+	IsClosing         bool
+	UnjoinedOK        bool `json:",omitempty"`
+	Log               bool
+	RunEvery          int
+	ReturnType        models.FuncType
 
 	TemplateName string   `json:"-"`
 	RawSquelch   []string `json:"-"`

@@ -542,6 +542,8 @@ func (c *Conf) loadAlert(s *parse.SectionNode) {
 			procNotification(v, a.CritNotification)
 		case "warnNotification":
 			procNotification(v, a.WarnNotification)
+		case "CloseNotification":
+			procNotification(v, a.CloseNotification)
 		case "unknown":
 			od, err := opentsdb.ParseDuration(v)
 			if err != nil {
