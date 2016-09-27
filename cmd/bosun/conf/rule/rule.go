@@ -475,10 +475,11 @@ func (c *Conf) loadAlert(s *parse.SectionNode) {
 		c.errorf("duplicate alert name: %s", name)
 	}
 	a := conf.Alert{
-		Vars:             make(map[string]string),
-		Name:             name,
-		CritNotification: new(conf.Notifications),
-		WarnNotification: new(conf.Notifications),
+		Vars:              make(map[string]string),
+		Name:              name,
+		CritNotification:  new(conf.Notifications),
+		WarnNotification:  new(conf.Notifications),
+		CloseNotification: new(conf.Notifications),
 	}
 	a.Text = s.RawText
 	a.Locator = newSectionLocator(s)
@@ -542,6 +543,8 @@ func (c *Conf) loadAlert(s *parse.SectionNode) {
 			procNotification(v, a.CritNotification)
 		case "warnNotification":
 			procNotification(v, a.WarnNotification)
+		case "closeNotification":
+			procNotification(v, a.CloseNotification)
 		case "unknown":
 			od, err := opentsdb.ParseDuration(v)
 			if err != nil {

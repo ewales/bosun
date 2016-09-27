@@ -271,8 +271,8 @@ var actionNotificationBodyTemplate *htemplate.Template
 func init() {
 	subject := `{{$first := index .States 0}}{{$count := len .States}}
 {{.User}} {{.ActionType}}
-{{if gt $count 1}} {{$count}} Alerts. 
-{{else}} Incident #{{$first.Id}} ({{$first.Subject}}) 
+{{if gt $count 1}} {{$count}} Alerts.
+{{else}} Incident #{{$first.Id}} ({{$first.Subject}})
 {{end}}`
 	body := `{{$count := len .States}}{{.User}} {{.ActionType}} {{$count}} alert{{if gt $count 1}}s{{end}}: <br/>
 <strong>Message:</strong> {{.Message}} <br/>
@@ -280,7 +280,7 @@ func init() {
 <ul>
 	{{range .States}}
 		<li>
-			<a href="{{$.IncidentLink .Id}}">#{{.Id}}:</a> 
+			<a href="{{$.IncidentLink .Id}}">#{{.Id}}:</a>
 			{{.Subject}}
 		</li>
 	{{end}}
@@ -331,7 +331,9 @@ func (s *Schedule) groupActionNotifications(aks []models.AlertKey) (map[*conf.No
 			continue
 		}
 		var n *conf.Notifications
-		if status.WorstStatus <= models.StWarning || alert.CritNotification == nil {
+		if alert.IsClosing && alert.CloseNotification != nil {
+			n = alert.CloseNotification
+		}else if status.WorstStatus <= models.StWarning || alert.CritNotification == nil {
 			n = alert.WarnNotification
 		} else {
 			n = alert.CritNotification
